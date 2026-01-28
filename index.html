@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #1d1d1f;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent: #2997ff; /* Apple Blue for subtle links */
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 44px;
+        }
+
+        .nav-logo {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: #d6d6d6;
+            text-decoration: none;
+            font-size: 12px;
+            margin-left: 24px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0; /* Animation start */
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        .hero h1 {
+            font-size: 80px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-top: 10px;
+        }
+
+        /* Bento Grid Layout (Projects) */
+        .section-title {
+            font-size: 48px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            padding-bottom: 100px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 300px; /* Fixed height for consistency */
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: default;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card-tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 17px;
+            color: var(--text-secondary);
+        }
+
+        .card-footer {
+            margin-top: auto;
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Specific Card Styles for variety */
+        .card.large {
+            grid-column: span 2;
+        }
+
+        /* Education & Skills Section (Simple List) */
+        .details-section {
+            padding: 100px 0;
+            border-top: 1px solid #333;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+        }
+
+        .details-title {
+            font-size: 32px;
+            color: var(--text-secondary);
+        }
+
+        .details-content ul {
+            list-style: none;
+        }
+
+        .details-content li {
+            font-size: 21px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .details-content li span {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--card-bg);
+            padding: 50px 0;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Animation Class */
+        /* Scroll Animation Class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease-out; /* 这里的 1s 决定了动画快慢 */
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 48px; }
+            .card.large { grid-column: span 1; }
+            .details-grid { grid-template-columns: 1fr; }
+        }
+
+
+
+        /* Profile Banner Styles */
+        .profile-banner {
+            position: relative;
+            width: 100%;
+            height: 700px; /* 高度可以根据你的图片比例调整 */
+            margin-bottom: 80px; /* 和下方项目的间距 */
+            
+            /* 这里替换你的图片路径 */
+            background-image: url('profile.jpg'); 
+            
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* 关键：开启视差滚动效果 */
+            /* 【修改点在此】不再强制黑白，而是稍微压暗一点，更有质感 */
+            filter: brightness(0.90) contrast(1.75);
+            /* 将原来的 transition: filter 0.5s ease; 替换为下面这行： */
+            transition: filter 0.5s ease, opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .profile-banner:hover {
+        /* 鼠标放上去：恢复到原图的亮度和对比度 */
+        /* 因为上面有了 transition，这里就会慢慢变亮，不会闪烁 */
+        filter: brightness(1) contrast(1);
+        }
+
+        /* 文字蒙层，保证文字在任何图片上都看得清 */
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* 半透明黑色遮罩 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+        }
+
+        .banner-overlay h2 {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 10px;
+        }
+
+        .banner-overlay p {
+            font-size: 20px;
+            font-weight: 400;
+            color: #d6d6d6;
+            max-width: 600px;
+        }
+
+        /* 针对手机端的适配 */
+        @media (max-width: 768px) {
+            .profile-banner {
+                height: 300px;
+                background-attachment: scroll; /* 手机上取消视差，避免卡顿 */
+            }
+            .banner-overlay h2 {
+                font-size: 32px;
+            }
+}
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container">
+            <a href="#" class="nav-logo">Michael Liu</a>
+            <div class="nav-links">
+                <a href="#projects">Projects</a>
+                <a href="#experience">Experiences</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Innovation<br>Creativity<br>Optimism</h1>
+            <p>Hi, I'm Liu Xinye <br> Currently affiliated with Waseda University's Furuzuki Lab</p>
+        </div>
+    </section>
+
+    <section class="profile-banner reveal">
+        <div class="banner-overlay">
+            <h2>Logic & Creativity</h2> 
+            <p>Exploring the boundary between algorithms and life</p>
+        </div>
+    </section>
+
+    <div class="container" id="projects">
+        <h2 class="section-title reveal">Projects</h2>
+        <div class="grid">
+            
+            <div class="card large reveal">
+                <div>
+                    <div class="card-tag">Research • 2025</div>
+                    <h3>Multimodal Recommender System</h3>
+                    <p>A Novel Algorithm Based on Contrastive Learning and Dynamic Graph Convolutional Networks</p>
+                </div>
+                <div class="card-footer">Python / Deep Learning</div>
+            </div>
+
+            <div class="card large reveal">
+                <div>
+                    <div class="card-tag">Algorithm • 2026</div>
+                    <h3>TSP Optimization</h3>
+                    <p>Solving the Traveling Salesman Problem (TSP) using Particle Swarm Optimization (PSO) and 2-opt Strategy An Efficient Path Planning Implementation for Large-scale Datasets.</p>
+                </div>
+                <div class="card-footer">Optimization / Heuristic Search</div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="container" id="experience">
+        <div class="details-section reveal">
+            <div class="details-grid">
+                <div class="details-title">Education</div>
+                <div class="details-content">
+                    <ul>
+                        <li>
+                            Waseda University (早稲田大学)
+                            <span>M.Eng. Student, Furuzuki Laboratory | Japan | 2025 - current</span>
+                        </li>
+                        <li>
+                            Jilin University (吉林大学)
+                            <span>B.Eng. Student| China | 2021 - 2025</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    <div class="container" id="experience">
+        <div class="details-section reveal" style="border-top: none;">
+            <div class="details-grid">
+                <div class="details-title">Skills</div>
+                <div class="details-content">
+                    <ul>
+                        <li>Recommender System <span>Deep Learning, Machine Learning</span></li>
+                        <li>National Mathematics Competition for University Students<span>Provincial Third Prize</span></li>
+                        <li>Full-stack Development <span>Python, Java, HTML, CSS, JavaScript, MySQL</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="details-section reveal" style="border-top: none;">
+            <div class="details-grid">
+                <div class="details-title">Hobbies</div>
+                <div class="details-content">
+                    <ul>
+                        <li> Speedcubing <span>Five Years of Experience</span></li>
+                        <li> Sport Stacking <span>Two Years of Experience, WSSA Competition Experience </span></li>
+                        <li> Go(Weiqi) <span>Four Years of Experience</span></li>
+                        <li> Basketball <span>Ten Years of Experience</span></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <p>Always be patient</p>
+            <p style="margin-top: 10px;">Contact: liuxinye03@gmail.com </p>
+            <p style="margin-top: 20px; color: #444;">&copy; 2026. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', reveal);
+    
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+    
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150; // 稍微调大一点，让它出现得晚一点，动画感更强
+    
+                // 核心逻辑修改：
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active'); // 进来了：播放动画
+                } else {
+                    reveals[i].classList.remove('active'); // 离开了：重置动画（关键！）
+                }
+            }
+        }
+        
+        // 初始化运行一次
+        reveal();
+    </script>
+</body>
+</html>
