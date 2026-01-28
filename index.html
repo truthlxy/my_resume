@@ -21,7 +21,7 @@
         }
 
         html {
-            scroll-behavior: smooth; /* ✅丝滑滚动 */
+            scroll-behavior: smooth;
         }
 
         body {
@@ -44,7 +44,7 @@
             letter-spacing: -0.02em;
         }
 
-        /* ✅解决锚点被导航栏遮挡的问题 */
+        
         #projects,
         #experience,
         #contact {
@@ -96,7 +96,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 44px; /* ✅避免被导航栏遮挡 */
+            padding-top: 44px; 
             opacity: 0;
             animation: fadeIn 1.5s ease-out forwards;
         }
@@ -124,7 +124,6 @@
             text-align: center;
         }
 
-        /* ✅Projects Grid：真正响应式 */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -281,12 +280,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ✅Mobile 优化（重点） */
         @media (max-width: 768px) {
             .hero h1 { font-size: 48px; }
 
             .grid {
-                grid-template-columns: 1fr; /* ✅手机强制单列 */
+                grid-template-columns: 1fr; 
             }
 
             .card {
